@@ -64,7 +64,7 @@ jobs:
 
     - name: Install Workload
       run: |
-        if [ ${{ matrix.runtime }} == "android" ]; then
+        if [ ${{ matrix.platform }} == "win-x64" ]; then
             dotnet workload install maui --source https://api.nuget.org/v3/index.json
             dotnet workload install android --source https://api.nuget.org/v3/index.json
         fi
