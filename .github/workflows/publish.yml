@@ -16,7 +16,6 @@ env:
   VERSION: ${{ github.event.inputs.version }}
   RELEASE: ${{ github.event.inputs.release }}
   UPLOAD_NAME: "Upload"
-  PUBLISH_DIR: "/tmp/publish/"
   APP_NAME: "BufferCopy"
   ASSEMBLY_NAME: "BufferCopy"
 
@@ -27,6 +26,7 @@ jobs:
         include:
           - platform: "windows-latest"
             runtime: "win-x64"
+            tmp: "C:\\Users\\runner\\AppData\\Local\\Temp\"
             publish: ImageConverter.win-x64.tgz
             upload: ImageConverter.win-x64.tgz
 
@@ -77,21 +77,21 @@ jobs:
       shell: bash
       run: |
         if [ ${{ matrix.runtime }} == "android-arm64" ]; then
-            dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
+            dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/
         else
-            dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/files/
-            tar -czf ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/files/
+            dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/files/
+            tar -czf ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ matrix.tmp }}${{ matrix.runtime }}/files/
         fi
-        ls -l ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }}
+        ls -l ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.publish }}
            
     - name: Rename
       run: |
-           mv ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.upload }}
+           mv ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.upload }}
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
           name: ${{ env.UPLOAD_NAME }}
-          path: ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.upload }}
+          path: ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.upload }}
            
 
   release:
