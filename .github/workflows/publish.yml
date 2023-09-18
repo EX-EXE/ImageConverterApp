@@ -27,12 +27,12 @@ jobs:
         include:
           - platform: "windows-latest"
             runtime: "win-x64"
-            publish: ImageConverter.exe
-            upload: ImageConverter.win-x64.exe
+            publish: ImageConverter.win-x64.zip
+            upload: ImageConverter.win-x64.zip
 
           - platform: "windows-latest"
             runtime: "android-arm64"
-            publish: ImageConverter
+            publish: ImageConverter.apk
             upload: ImageConverter.apk
 
           #- platform: "macos-latest"
@@ -80,6 +80,7 @@ jobs:
             dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
+            zip -r ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/ 
         fi
            
     - name: Rename
