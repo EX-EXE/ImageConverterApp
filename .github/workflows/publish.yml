@@ -74,9 +74,9 @@ jobs:
       run: dotnet restore
       
     - name: Publish
-      #run: dotnet publish ./src/${{ env.ASSEMBLY_NAME }}/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
+      shell: bash
       run: |
-        if [ ${{ matrix.runtime }} == "android" ]; then
+        if [ ${{ matrix.runtime }} == "android-arm64" ]; then
             dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
