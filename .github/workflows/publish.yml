@@ -32,6 +32,7 @@ jobs:
           - platform: "windows-latest"
             runtime: "android-arm64"
             tmp: "C:/Users/runner/AppData/Local/Temp/"
+            app_version: 1
             app_id: com.github.EX-EXE.ImageConverterApp
             publish: com.github.EX-EXE.ImageConverterApp-Signed.apk
             upload: ImageConverter.apk
@@ -78,7 +79,7 @@ jobs:
       shell: bash
       run: |
         if [ ${{ matrix.runtime }} == "android-arm64" ]; then
-            dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/ -p:ApplicationTitle=${{ env.APP_NAME }} -p:ApplicationId=${{ matrix.app_id }} -p:ApplicationVersion=${{ env.VERSION }} -p:ApplicationDisplayVersion=${{ env.VERSION }}
+            dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/ -p:ApplicationTitle=${{ env.APP_NAME }} -p:ApplicationId=${{ matrix.app_id }} -p:ApplicationVersion=${{ matrix.app_version }} -p:ApplicationDisplayVersion=${{ env.VERSION }}
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/files/
             cd ${{ matrix.tmp }}${{ matrix.runtime }}/
