@@ -81,7 +81,8 @@ jobs:
             dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/files/
-            tar -czvf ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ matrix.tmp }}${{ matrix.runtime }}/files/
+            cd ${{ matrix.tmp }}${{ matrix.runtime }}/
+            tar -czvf ${{ matrix.publish }} ./files/
         fi
         ls -l ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.publish }}
            
