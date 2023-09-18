@@ -32,6 +32,7 @@ jobs:
 
           - platform: "windows-latest"
             runtime: "android-arm64"
+            tmp: "C:\\Users\\runner\\AppData\\Local\\Temp\\"
             publish: ImageConverter.apk
             upload: ImageConverter.apk
 
