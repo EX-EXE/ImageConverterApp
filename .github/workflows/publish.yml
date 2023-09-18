@@ -82,6 +82,7 @@ jobs:
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/files/
             tar -czf ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/files/
         fi
+        ls -l ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }}
            
     - name: Rename
       run: |
