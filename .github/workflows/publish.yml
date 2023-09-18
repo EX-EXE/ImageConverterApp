@@ -30,25 +30,25 @@ jobs:
             publish: ImageConverter.exe
             upload: ImageConverter.win-x64.exe
 
-          - platform: "macos-latest"
-            runtime: "osx-x64"
-            publish: ImageConverter
-            upload: ImageConverter.osx-x64
-
-          - platform: "ubuntu-latest"
+          - platform: "windows-latest"
             runtime: "android-arm64"
             publish: ImageConverter
             upload: ImageConverter.apk
 
-          - platform: "ubuntu-latest"
-            runtime: "linux-x64"
-            publish: ImageConverter
-            upload: ImageConverter.linux-x64
+          #- platform: "macos-latest"
+          #  runtime: "osx-x64"
+          #  publish: ImageConverter
+          #  upload: ImageConverter.osx-x64
 
-          - platform: "ubuntu-latest"
-            runtime: "linux-arm64"
-            publish: ImageConverter
-            upload: ImageConverter.linux-arm64
+          #- platform: "ubuntu-latest"
+          #  runtime: "linux-x64"
+          #  publish: ImageConverter
+          #  upload: ImageConverter.linux-x64
+
+          #- platform: "ubuntu-latest"
+          #  runtime: "linux-arm64"
+          #  publish: ImageConverter
+          #  upload: ImageConverter.linux-arm64
     runs-on: ${{ matrix.platform }}
     
     steps:
