@@ -74,13 +74,13 @@ jobs:
       run: dotnet restore
       
     - name: Publish
-      shell: bash
+      shell: powershell
       run: |
         if [ ${{ matrix.runtime }} == "android-arm64" ]; then
             dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
-            zip -r ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/ 
+            Compress-Archive -Path ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/* -Destination ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }}
         fi
            
     - name: Rename
