@@ -27,8 +27,8 @@ jobs:
         include:
           - platform: "windows-latest"
             runtime: "win-x64"
-            publish: ImageConverter.win-x64.zip
-            upload: ImageConverter.win-x64.zip
+            publish: ImageConverter.win-x64.tgz
+            upload: ImageConverter.win-x64.tgz
 
           - platform: "windows-latest"
             runtime: "android-arm64"
@@ -74,13 +74,13 @@ jobs:
       run: dotnet restore
       
     - name: Publish
-      shell: powershell
+      shell: bash
       run: |
         if [ ${{ matrix.runtime }} == "android-arm64" ]; then
             dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
-            Compress-Archive -Path ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/* -Destination ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }}
+            tar -czf ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
         fi
            
     - name: Rename
