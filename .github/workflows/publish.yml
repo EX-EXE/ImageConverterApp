@@ -16,8 +16,7 @@ env:
   VERSION: ${{ github.event.inputs.version }}
   RELEASE: ${{ github.event.inputs.release }}
   UPLOAD_NAME: "Upload"
-  APP_NAME: "BufferCopy"
-  ASSEMBLY_NAME: "BufferCopy"
+  APP_NAME: "ImageConverterApp"
 
 jobs:
   build:
@@ -33,7 +32,8 @@ jobs:
           - platform: "windows-latest"
             runtime: "android-arm64"
             tmp: "C:/Users/runner/AppData/Local/Temp/"
-            publish: ImageConverter.apk
+            app_id: com.github.EX-EXE.ImageConverterApp
+            publish: com.github.EX-EXE.ImageConverterApp-Signed.apk
             upload: ImageConverter.apk
 
           #- platform: "macos-latest"
@@ -78,7 +78,7 @@ jobs:
       shell: bash
       run: |
         if [ ${{ matrix.runtime }} == "android-arm64" ]; then
-            dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/
+            dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/ -p:ApplicationTitle=${{ env.APP_NAME }} -p:ApplicationId=${{ matrix.app_id }} -p:ApplicationVersion=${{ env.VERSION }} -p:ApplicationDisplayVersion=${{ env.VERSION }}
         else
             dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/files/
             cd ${{ matrix.tmp }}${{ matrix.runtime }}/
