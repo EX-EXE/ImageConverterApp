@@ -81,7 +81,7 @@ jobs:
         if [ ${{ matrix.runtime }} == "android-arm64" ]; then
             dotnet publish ./src/ImageConverterApp.Android/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/ -p:ApplicationTitle=${{ env.APP_NAME }} -p:ApplicationId=${{ matrix.app_id }} -p:ApplicationVersion=${{ matrix.app_version }} -p:ApplicationDisplayVersion=${{ env.VERSION }}
         else
-            dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/files/
+            dotnet publish ./src/ImageConverterApp.Desktop/ -c release -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ matrix.tmp }}${{ matrix.runtime }}/files/ --self-contained
             cd ${{ matrix.tmp }}${{ matrix.runtime }}/
             tar -czvf ${{ matrix.publish }} ./files/
         fi
