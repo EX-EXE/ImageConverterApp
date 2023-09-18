@@ -26,7 +26,7 @@ jobs:
         include:
           - platform: "windows-latest"
             runtime: "win-x64"
-            tmp: "C:\\Users\\runner\\AppData\\Local\\Temp\"
+            tmp: "C:\\Users\\runner\\AppData\\Local\\Temp\\"
             publish: ImageConverter.win-x64.tgz
             upload: ImageConverter.win-x64.tgz
 
