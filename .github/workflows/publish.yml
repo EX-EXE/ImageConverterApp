@@ -65,7 +65,7 @@ jobs:
     - name: Install Workload
       shell: bash
       run: |
-        if [ ${{ matrix.platform }} == "win-x64" ]; then
+        if [ ${{ matrix.platform }} == "windows-latest" ]; then
             dotnet workload install maui --source https://api.nuget.org/v3/index.json
             dotnet workload install android --source https://api.nuget.org/v3/index.json
         fi
