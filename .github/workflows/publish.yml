@@ -84,7 +84,7 @@ jobs:
             cd ${{ matrix.tmp }}${{ matrix.runtime }}/
             tar -czvf ${{ matrix.publish }} ./files/
         fi
-        ls -l ${{ matrix.tmp }}${{ matrix.runtime }}/${{ matrix.publish }}
+        ls -l ${{ matrix.tmp }}${{ matrix.runtime }}/
            
     - name: Rename
       run: |
