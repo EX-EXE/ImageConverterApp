@@ -63,6 +63,7 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: Install Workload
+      shell: bash
       run: |
         if [ ${{ matrix.platform }} == "win-x64" ]; then
             dotnet workload install maui --source https://api.nuget.org/v3/index.json
